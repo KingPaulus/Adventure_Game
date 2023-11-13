@@ -34,6 +34,7 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
     int Schaden2 = 0;
     int SpielerIcon = 1;
     // 1Tod		2BogenSchuetze		3Zauberer
+    String [] characterNames = new String[3];
 
     String GameNameNormal = Main.GameName;
     boolean[] WindowStart = new boolean[4];
@@ -135,6 +136,9 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
         WaffenName[2] = "hp";
         WaffenName[3] = "acc";
         WaffenName[4] = "dge";
+        characterNames[0] = "Schwarzer Magier";
+        characterNames[1] = "Bogen Schuetze";
+        characterNames[2] = "Magier";
         this.setImage();
         repaint();
     }
@@ -252,8 +256,6 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
         }
         repaint();
     }
-
-
 
     public void setImage() {
         System.out.println("Setting Images");
@@ -379,6 +381,51 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
         repaint();
     }
 
+    public void checkIfPlayerDead() {
+        if(player.getHp() <= 0) {
+            GameOver = true;
+            WindowStart[2] = false;
+            WindowStart[3] = true;
+            repaint();
+        }
+    }
+
+    public void spawnNewOpponent() {
+        System.out.println("Naechte Welle");
+        spawnGegner = true;
+        L1.setGegnerLevel(L1.getGegnerLevel() + 10);
+        System.out.println("Level = " + L1.getGegnerLevel());
+        L1.setGegnerAnzahl(4);
+        Restgegener = L1.getGegnerAnzahl();
+        repaint();
+    }
+
+    public void swapCharakter(String direction) {
+        if(direction == "left") {
+            if(SpielerIcon == 1) {
+                SpielerIcon = 3;
+                repaint();
+            } else if(SpielerIcon == 3) {
+                SpielerIcon = 2;
+                repaint();
+            } else if(SpielerIcon == 2) {
+                SpielerIcon = 1;
+                repaint();
+            }
+        } else if (direction == "right") {
+            if(SpielerIcon == 1) {
+                SpielerIcon = 2;
+                repaint();
+            } else if(SpielerIcon == 2) {
+                SpielerIcon = 3;
+                repaint();
+            } else if(SpielerIcon == 3) {
+                SpielerIcon = 1;
+                repaint();
+            }
+        }
+    }
+
 
 
 
@@ -450,8 +497,44 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
 
             g.drawImage(image22, 0, 0, BreiteX, HoheY, null);
             g.setColor(Color.WHITE);
-            g.setFont(new Font("Franklin Gothic Demi Italic", 4, 60));
-            g.drawString("Charakter", 100, 60);
+
+            int outlineSize = 2;
+
+            g.setFont(new Font("Franklin Gothic Demi Italic", 4, 30));
+            if(SpielerIcon == 1) {
+                g.setColor(Color.BLACK);
+                for (int xOffset = -outlineSize; xOffset <= outlineSize; xOffset++) {
+                    for (int yOffset = -outlineSize; yOffset <= outlineSize; yOffset++) {
+                        if (xOffset != 0 || yOffset != 0) {
+                            g.drawString(characterNames[0], 110 + xOffset, 60 + yOffset);
+                        }
+                    }
+                }
+                g.setColor(Color.WHITE);
+                g.drawString(characterNames[0], 110, 60);
+            } else if(SpielerIcon == 2) {
+                g.setColor(Color.BLACK);
+                for (int xOffset = -outlineSize; xOffset <= outlineSize; xOffset++) {
+                    for (int yOffset = -outlineSize; yOffset <= outlineSize; yOffset++) {
+                        if (xOffset != 0 || yOffset != 0) {
+                            g.drawString(characterNames[1], 140 + xOffset, 60 + yOffset);
+                        }
+                    }
+                }
+                g.setColor(Color.WHITE);
+                g.drawString(characterNames[1], 140, 60);
+            } else if(SpielerIcon == 3) {
+                g.setColor(Color.BLACK);
+                for (int xOffset = -outlineSize; xOffset <= outlineSize; xOffset++) {
+                    for (int yOffset = -outlineSize; yOffset <= outlineSize; yOffset++) {
+                        if (xOffset != 0 || yOffset != 0) {
+                            g.drawString(characterNames[2], 170 + xOffset, 60 + yOffset);
+                        }
+                    }
+                }
+                g.setColor(Color.WHITE);
+                g.drawString(characterNames[2], 170, 60);
+            }
 
             g.drawImage(image2_2, 80, 80, 300, 300, null);
 
@@ -507,20 +590,10 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
             }
 
             if (Restgegener <= 0) {
-                System.out.println("Naechte Welle");
-                spawnGegner = true;
-                L1.setGegnerLevel(L1.getGegnerLevel() + 10);
-                System.out.println("Level = " + L1.getGegnerLevel());
-                L1.setGegnerAnzahl(4);
-                Restgegener = L1.getGegnerAnzahl();
-                repaint();
+                this.spawnNewOpponent();
             }
 
-            if(player.getHp() <= 0) {
-                GameOver = true;
-                WindowStart[3] = true;
-                // TOT
-            }
+            this.checkIfPlayerDead();
 
 //		g.setColor(Color.RED);
 //		g.fillRect(0, 0, 11*20, 6*20);
@@ -794,29 +867,10 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
             }
             if(WindowStart[1] == true) {
                 if(x > 55 && x < 125 && y > 225 && y < 275) {
-//					System.out.println("LEFT");
-                    if(SpielerIcon == 1) {
-                        SpielerIcon = 2;
-                        repaint();
-                    } else if(SpielerIcon == 2) {
-                        SpielerIcon = 3;
-                        repaint();
-                    } else if(SpielerIcon == 3) {
-                        SpielerIcon = 1;
-                        repaint();
-                    }
+					this.swapCharakter("left");
                 }
                 if(x > 385 && x < 455 && y > 225 && y < 275) {
-                    if(SpielerIcon == 1) {
-                        SpielerIcon = 3;
-                        repaint();
-                    } else if(SpielerIcon == 3) {
-                        SpielerIcon = 2;
-                        repaint();
-                    } else if(SpielerIcon == 2) {
-                        SpielerIcon = 1;
-                        repaint();
-                    }
+                    this.swapCharakter("Right");
                 }
 
                 if(x > 155 && x < 350 && y > 420 && y < 460) {
@@ -965,41 +1019,21 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
 
         if(WindowStart[1] == true) {
             if(key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
-//				System.out.println("LEFT");
-                if(SpielerIcon == 1) {
-                    SpielerIcon = 2;
-
-                } else if(SpielerIcon == 2) {
-                    SpielerIcon = 3;
-
-                } else if(SpielerIcon == 3) {
-                    SpielerIcon = 1;
-
-                }
+                this.swapCharakter("left");
             }
             if(key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
-//				System.out.println("Right");
-                if(SpielerIcon == 1) {
-                    SpielerIcon = 3;
-
-                } else if(SpielerIcon == 3) {
-                    SpielerIcon = 2;
-
-                } else if(SpielerIcon == 2) {
-                    SpielerIcon = 1;
-
-                }
+                this.swapCharakter("right");
             }
             if(key == KeyEvent.VK_ENTER || key == KeyEvent.VK_SPACE) {
                 if(SpielerIcon == 1) {
                     Charakter_Select(1);
-
+                    repaint();
                 } else if(SpielerIcon == 3) {
                     Charakter_Select(2);
-
+                    repaint();
                 } else if(SpielerIcon == 2) {
                     Charakter_Select(3);
-
+                    repaint();
                 }
             }
 
