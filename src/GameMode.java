@@ -37,8 +37,10 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
 
     String GameNameNormal = Main.GameName;
     boolean[] WindowStart = new boolean[4];
-    // NameStart
-    // Weapon Start
+    // Start Screen Name
+    // Charakter Start Screen
+    // Game Screen
+    // Game Over Screen
     boolean imShop = false;
     int anzahl_von_waffen = 5;
     boolean []imKampf = new boolean[L1.getGegnerAnzahl()];
@@ -67,14 +69,10 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
     Image image2 = null;
     Image image2_2 = null;
     Image image3 = null;
-    ImageIcon imagePic3_2;
     Image image3_2 = null;
-    ImageIcon imagePic4;
     Image image4 = null;
     Image image5 = null;
-    ImageIcon imagePic6;
     Image image6 = null;
-    ImageIcon imagePic7;
     Image image7 = null;
     Image image8 = null;
     Image image9 = null;
@@ -90,7 +88,6 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
     Image image19 = null;
     Image image20 = null;
     Image image21 = null;
-    ImageIcon imagePic22;
     Image image22 = null;
     Image image23 = null;
     Image image24 = null;
@@ -140,7 +137,6 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
         WaffenName[4] = "dge";
         this.setImage();
         repaint();
-
     }
 
     public void neuStart () {
@@ -182,7 +178,7 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
         Schaden1 = 0;
         Schaden2 = 0;
 //		System.out.println("angriff");
-        // 0. St�rke
+        // 0. Staerke
         // 1. Verteidigung
         // 2. Leben
         // 3. Genauigkeit
@@ -367,6 +363,22 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
         }
     }
 
+    public void Charakter_Select(int Charakter) {
+        if(Charakter == 1) {
+            waffe = 1;
+            player.setSpieler(70,40,50,45,20);
+        } else if(Charakter == 2) {
+            waffe = 2;
+            player.setSpieler(50,30,50,40,20);
+        } else if(Charakter == 3) {
+            waffe = 2;
+            player.setSpieler(50,30,50,40,20);
+        }
+        WindowStart[1] = false;
+        WindowStart[2] = true;
+        repaint();
+    }
+
 
 
 
@@ -375,307 +387,8 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
         super.paint(g);
         System.out.println("Painting Game");
 
-        if(spawnGegner== true) {
-            for(int iiiu = 0; iiiu<L1.getGegnerAnzahl();iiiu++) {
-                //x460(23) y280(14)
-                int rndm1 = (int)(Math.random()*23);
-                if(rndm1 == 0) {
-                    rndm1 = 1;
-                }
-                int rndm2 = (int)(Math.random()*14);
-                //Sicherung
-                if(rndm2 == 0) {
-                    rndm2 = 1;
-                }
-                L1.spawngegner(rndm1, rndm2,iiiu);
-            }
-            spawnGegner = false;
-
-        }
-
-        this.setPlayerImage(SpielerIcon);
-        this.setShopImage();
-
-        if(	player.getX()/20 >= 0 && player.getY()/20 >= 0 && player.getX()/20 <= 10 & player.getY()/20 <= 5
-                || player.getX()/20 >= 11 && player.getY()/20 >= 0 && player.getX()/20 <= 13 && player.getY()/20 <= 3) {
-            this.setFightBackgroundImage("Desert");
-        } else if(player.getX()/20 >= 14 && player.getY()/20 >= 0 && player.getX()/20 <= 23 & player.getY()/20 <= 2) {
-            this.setFightBackgroundImage("Ice");
-        } else if(player.getX()/20 >= 19 && player.getY()/20 >= 3 && player.getX()/20 <= 23 & player.getY()/20 <= 9
-                || player.getX()/20 >= 20 && player.getY()/20 >= 10 && player.getX()/20 <= 23 & player.getY()/20 <= 12) {
-            this.setFightBackgroundImage("Lake");
-        } else if(player.getX()/20 >= 0 && player.getY()/20 >= 6 && player.getX()/20 <= 7 & player.getY()/20 <= 14) {
-            this.setFightBackgroundImage("Rock");
-        } else if(player.getX()/20 >= 8 && player.getY()/20 >= 10 && player.getX()/20 <= 19 & player.getY()/20 <= 14
-                || player.getX()/20 >= 20 && player.getY()/20 >= 13 && player.getX()/20 <= 23 & player.getY()/20 <= 14) {
-            this.setFightBackgroundImage("Forest");
-        } else if(player.getX()/20 >= 14 && player.getY()/20 >= 3 && player.getX()/20 <= 18 & player.getY()/20 <= 3
-                || player.getX()/20 >= 11 && player.getY()/20 >= 4 && player.getX()/20 <= 18 & player.getY()/20 <= 5
-                || player.getX()/20 >= 8 && player.getY()/20 >= 6 && player.getX()/20 <= 18 & player.getY()/20 <= 9) {
-            this.setFightBackgroundImage("Gras");
-        }
-
-        if (Restgegener <= 0) {
-            System.out.println("Naechte Welle");
-            spawnGegner = true;
-            L1.setGegnerLevel(L1.getGegnerLevel() + 10);
-            System.out.println("Level = " + L1.getGegnerLevel());
-            L1.setGegnerAnzahl(4);
-            Restgegener = L1.getGegnerAnzahl();
-            repaint();
-        }
-
-        if(player.getHp() <= 0) {
-            GameOver = true;
-            // TOT
-        }
-
-//		g.setColor(Color.RED);
-//		g.fillRect(0, 0, 11*20, 6*20);
-//		g.fillRect(0, 0, 14*20, 5*20);
-//		g.setColor(Color.BLUE);
-//		g.fillRect(14*20, 0, 10*20, 3*20);
-//		g.setColor(Color.CYAN);
-//		g.fillRect(19*20, 3*20, 5*20, 7*20);
-//		g.fillRect(20*20, 10*20, 4*20, 3*20);
-//		g.setColor(Color.ORANGE);
-//		g.fillRect(0*20, 6*20, 8*20, 9*20);
-//		g.setColor(Color.GREEN);
-//		g.fillRect(8*20, 10*20, 12*20, 10*20);
-//		g.fillRect(20*20, 13*20, 4*20, 2*20);
-//		g.setColor(Color.PINK);
-//		g.fillRect(14*20, 3*20, 5*20, 2*20);
-//		g.fillRect(11*20, 4*20, 8*20, 2*20);
-//		g.fillRect(8*20, 6*20, 11*20, 4*20);
-        g.drawImage(image1, 0, 0, BreiteX, HoheY-200, null);
-
-        g.drawImage(image2, player.getX(), player.getY(), PlayerGrosse, PlayerGrosse, null);
-
-        for(int uuz = 0;uuz<L1.getGegnerAnzahl();uuz++) {
-//			g.drawImage(image3, gegnerPose[uuz] [0], gegnerPose[uuz] [1], PlayerGrosse, PlayerGrosse, null);
-            g.drawImage(image3, L1.getGegnerPose(uuz, 0), L1.getGegnerPose(uuz, 1), PlayerGrosse, PlayerGrosse, null);
-        }
-
-        g.setColor(Color.RED);
-        g.drawImage(image4, shop.getShopPose(0), shop.getShopPose(1), PlayerGrosse, PlayerGrosse, null);
-        if(player.getX()==shop.getShopPose(0) && player.getY()==shop.getShopPose(1)) {
-            imShop = true;
-            shop();
-        } else {
-            imShop = false;
-        }
-
-
-        if(imShop == true) {
-            g.drawImage(image8, 0, 0, BreiteX, HoheY-200, null);
-
-            int LOL1 = 100;
-
-            g.drawImage(image10, 100, 60, 50, 50, null);
-            g.drawImage(image11, 160, 60, 50, 50, null);
-            g.drawImage(image12, 220, 60, 50, 50, null);
-            g.drawImage(image13, 280, 60, 50, 50, null);
-            g.drawImage(image14, 340, 60, 50, 50, null);
-
-            // 7 = 1Zeile
-            int KeyForBuy = 1;
-            g.setColor(Color.WHITE);
-            g.setFont(new Font("Franklin Gothic Demi Italic", 4, 15));
-            g.drawString("Or Use Key", LOL1-90, 150);
-            if(5 <= 7) {
-                for(int izz = 0; izz <5;izz++) {
-                    g.setColor(Color.BLACK);
-                    g.fillRect(LOL1, 120, 50, 20);
-                    g.setColor(Color.WHITE);
-                    g.fillRect(LOL1+2, 122, 46, 16);
-                    g.setFont(new Font("Franklin Gothic Demi Italic", 4, 15));
-                    g.setColor(Color.BLACK);
-                    g.drawString(shop.getPreise()+"$", LOL1+2, 135);
-                    g.setFont(new Font("Franklin Gothic Demi Italic", 4, 20));
-                    g.setColor(Color.WHITE);
-                    g.drawString(WaffenName[izz], LOL1+5, 40);
-                    g.setColor(Color.WHITE);
-                    g.setFont(new Font("Franklin Gothic Demi Italic", 4, 15));
-                    g.drawString("" + KeyForBuy, LOL1+2, 150);
-                    KeyForBuy = KeyForBuy + 1;
-                    LOL1 = LOL1 + 60;
-                }
-                g.drawImage(image9, 0, 155, BreiteX, 10, null);
-            }
-
-        }
-
-        for(int uuz = 0;uuz<L1.getGegnerAnzahl();uuz++) {
-            if(player.getX()==L1.getGegnerPose(uuz, 0) && player.getY()==L1.getGegnerPose(uuz, 1)) {
-                imKampf[uuz] = true;
-                kampf();
-//				System.out.println("Im Kampf mit " + uuz + ". Gegner");
-                Kampfgegen = uuz;
-            } else {
-                imKampf[uuz] = false;
-            }
-        }
-
-
-        // image2_2
-        for(int ooi = 0; ooi<4;ooi++) {
-            if(imKampf[ooi] == true) {
-                Spieler_vs_Ki = true;
-                //Karte - Spieler - Gegner
-                g.drawImage(image7, 0, 0, BreiteX, HoheY-200, null);
-                g.drawImage(image2_2, 10, 100, 200, 200, null);
-                g.drawImage(image3_2, 280, 100, 200, 200, null);
-                String[] gegnerwerteString = new String[anzahl_von_waffen];
-                g.setFont(new Font("Franklin Gothic Demi Italic", 4, 20));
-                g.setColor(Color.WHITE);
-
-                for(int uztz = 0; uztz<gegnerwerteString.length;uztz++) {
-//					gegnerwerteString[uztz] = String.valueOf(gegnerWerte[Kampfgegen][uztz]);
-                    gegnerwerteString[uztz] = String.valueOf(L1.getgegnerWerte(Kampfgegen, uztz));
-                }
-                g.drawString("dmg: " + gegnerwerteString[0], 20, 30);
-                g.drawString("def: " + gegnerwerteString[1], 110, 30);
-                g.drawString("hp: " + gegnerwerteString[2], 200, 30);
-                g.drawString("acc: " + gegnerwerteString[3], 290, 30);
-                if(player.getAcc() > L1.getgegnerWerte(Kampfgegen,4)) {
-                    g.setColor(Color.BLUE);
-                } else if(player.getAcc() < L1.getgegnerWerte(Kampfgegen,4)) {
-                    g.setColor(Color.RED);
-                } else if(player.getAcc() == L1.getgegnerWerte(Kampfgegen,4)) {
-                    g.setColor(Color.YELLOW);
-                }
-                g.drawString("dge: " + gegnerwerteString[4], 380, 30);
-
-//				Schaden2
-
-                g.setColor(Color.WHITE);
-                g.setFont(new Font("Franklin Gothic Demi Italic", 4, 40));
-                g.drawString("- " + Schaden1, 380, 70);
-                g.drawString("- " + Schaden2, 30, 70);
-            }
-        }
-
-
-
-        // HotBar
-        g.drawImage(image15, 0, HoheY-200, BreiteX, 200, null);
-
-        // Pfeil Tasten
-        if(Spieler_vs_Ki == false) {
-
-            // Oben
-            g.drawImage(image16, 400, 330, 30, 30, null);
-
-            // Unten
-            g.drawImage(image17, 400, 390, 30, 30, null);
-
-            // LINKS
-            g.drawImage(image18, 370, 360, 30, 30, null);
-
-//			Rechts
-            g.drawImage(image19, 430, 360, 30, 30, null);
-        } else {
-            g.drawImage(image23, 340, 320, 120, 40, null);
-            g.drawImage(image24, 340, 380, 120, 40, null);
-            g.setFont(new Font("Franklin Gothic Demi Italic", 4, 20));
-            g.setColor(Color.BLACK);
-            g.drawString("Q", 375, 365);
-            g.drawString("E", 375, 425);
-
-        }
-
-
-        //Herzen
-        int NeueHerzenZeile = 15;
-        int groeseDerHerzen = 20;
-        g.setColor(Color.RED);
-        Herzen = player.getHp() / 10;
-//		System.out.println("Live = " + Herzen);
-
-        for(int zzzu = 0;zzzu<Herzen;zzzu++) {
-            g.drawImage(image5, NeueHerzenZeile, HoheY-180, groeseDerHerzen, groeseDerHerzen, null);
-            NeueHerzenZeile = NeueHerzenZeile + (groeseDerHerzen);
-        }
-        if (player.getHp() > 1 && player.getHp() < 10) {
-            g.drawImage(image26, NeueHerzenZeile, HoheY-180, groeseDerHerzen, groeseDerHerzen, null);
-        }
-
-        //Geld
-        g.setColor(Color.YELLOW);
-        GeldString = String.valueOf(player.getGeld());
-        g.setFont(new Font("Matura MT Script Capitals", 4, 40));
-        g.drawString(GeldString + "$", 20, 380);
-
-        //Name
-        g.setFont(new Font("Franklin Gothic Demi Italic", 4, 20));
-        g.setColor(Color.WHITE);
-        g.drawString(player.getName(), 20, 420);
-
-        //Waffe
-//		g.setColor(Color.BLACK);
-        int groese = 80;
-        if(waffe == 1) {
-            this.setWeaponImage(1);
-            g.drawImage(image6, 235, 325, groese, groese, null);
-        } else if(waffe == 2) {
-            this.setWeaponImage(2);
-            g.drawImage(image6, 235, 325, groese, groese, null);
-        } else if(waffe == 3) {
-            this.setWeaponImage(3);
-            g.drawImage(image6, 235, 325, groese, groese, null);
-        }
-        String[] waffenString = new String[5];
-        waffenString[0] = String.valueOf(player.getDmg());
-        waffenString[1] = String.valueOf(player.getDef());
-        waffenString[2] = String.valueOf(player.getHp());
-        waffenString[3] = String.valueOf(player.getAcc());
-        waffenString[4] = String.valueOf(player.getDge());
-        g.setFont(new Font("Franklin Gothic Demi Italic", 4, 20));
-        g.setColor(Color.WHITE);
-        g.drawString("dmg: " + waffenString[0], 20, 450);
-        g.drawString("def: " + waffenString[1], 110, 450);
-        g.drawString("hp: " + waffenString[2], 200, 450);
-        g.drawString("acc: " + waffenString[3], 290, 450);
-        g.drawString("dge: " + waffenString[4], 380, 450);
-        // Schaden = dmg
-        // verteidigung = def
-        // Leben = hp
-        // genauigkeit = acc
-        // ausweichen = eva dge
-
-        if(Spieler_vs_Ki == true) {
-
-        }
-
-        if( player.getName().length() == 14 && WindowStart[0]) {
-            System.out.println("Name Entspricht 14 Zeichen");
-            WindowStart[1] = true;
-            WindowStart[0] = false;
-        }
-
-        if(WindowStart[1] == true) {
-//			System.out.println("Weapon Enter");
-            g.drawImage(image22, 0, 0, BreiteX, HoheY, null);
-            g.setColor(Color.WHITE);
-            g.setFont(new Font("Franklin Gothic Demi Italic", 4, 60));
-            g.drawString("Charakter", 100, 60);
-
-            g.drawImage(image2_2, 80, 80, 300, 300, null);
-
-            imagePic27 = new ImageIcon("image/1Links.png");
-            image27 = imagePic27.getImage();
-            g.drawImage(image27, 380, 190, 80, 80, null);
-
-            imagePic27 = new ImageIcon("image/1Rechts.png");
-            image27 = imagePic27.getImage();
-            g.drawImage(image27, 50, 190, 80, 80, null);
-
-            imagePic27 = new ImageIcon("image/3Enter.png");
-            image27 = imagePic27.getImage();
-            g.drawImage(image27, 150, 390, 200, 50, null);
-        }
         if(WindowStart[0]) {
-			System.out.println("Name Enter");
+            System.out.println("Name Enter");
             g.drawImage(image20, 0, 0, BreiteX, HoheY-40, null);
             g.setColor(Color.WHITE);
 //			g.fillRect(40, 80, 400, 50);
@@ -723,32 +436,313 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
             g.setFont(new Font("Franklin Gothic Demi Italic", 4, 30));
             g.setColor(Color.WHITE);
             //14 Maximum
-        }
-        if(GameOver == true) {
+
+            if( player.getName().length() == 14) {
+                System.out.println("Name Entspricht 14 Zeichen");
+                WindowStart[1] = true;
+                WindowStart[0] = false;
+                repaint();
+            }
+
+        } else if(WindowStart[1]) {
+            System.out.println("Weapon Enter");
+            this.setPlayerImage(SpielerIcon);
+
+            g.drawImage(image22, 0, 0, BreiteX, HoheY, null);
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Franklin Gothic Demi Italic", 4, 60));
+            g.drawString("Charakter", 100, 60);
+
+            g.drawImage(image2_2, 80, 80, 300, 300, null);
+
+            imagePic27 = new ImageIcon("image/1Links.png");
+            image27 = imagePic27.getImage();
+            g.drawImage(image27, 380, 190, 80, 80, null);
+
+            imagePic27 = new ImageIcon("image/1Rechts.png");
+            image27 = imagePic27.getImage();
+            g.drawImage(image27, 50, 190, 80, 80, null);
+
+            imagePic27 = new ImageIcon("image/3Enter.png");
+            image27 = imagePic27.getImage();
+            g.drawImage(image27, 150, 390, 200, 50, null);
+        } else if(WindowStart[2]) {
+            this.setShopImage();
+
+            if(spawnGegner) {
+                for(int iiiu = 0; iiiu<L1.getGegnerAnzahl();iiiu++) {
+                    //x460(23) y280(14)
+                    int rndm1 = (int)(Math.random()*23);
+                    if(rndm1 == 0) {
+                        rndm1 = 1;
+                    }
+                    int rndm2 = (int)(Math.random()*14);
+                    //Sicherung
+                    if(rndm2 == 0) {
+                        rndm2 = 1;
+                    }
+                    L1.spawngegner(rndm1, rndm2,iiiu);
+                }
+                spawnGegner = false;
+
+            }
+
+            if(	player.getX()/20 >= 0 && player.getY()/20 >= 0 && player.getX()/20 <= 10 & player.getY()/20 <= 5
+                    || player.getX()/20 >= 11 && player.getY()/20 >= 0 && player.getX()/20 <= 13 && player.getY()/20 <= 3) {
+                this.setFightBackgroundImage("Desert");
+            } else if(player.getX()/20 >= 14 && player.getY()/20 >= 0 && player.getX()/20 <= 23 & player.getY()/20 <= 2) {
+                this.setFightBackgroundImage("Ice");
+            } else if(player.getX()/20 >= 19 && player.getY()/20 >= 3 && player.getX()/20 <= 23 & player.getY()/20 <= 9
+                    || player.getX()/20 >= 20 && player.getY()/20 >= 10 && player.getX()/20 <= 23 & player.getY()/20 <= 12) {
+                this.setFightBackgroundImage("Lake");
+            } else if(player.getX()/20 >= 0 && player.getY()/20 >= 6 && player.getX()/20 <= 7 & player.getY()/20 <= 14) {
+                this.setFightBackgroundImage("Rock");
+            } else if(player.getX()/20 >= 8 && player.getY()/20 >= 10 && player.getX()/20 <= 19 & player.getY()/20 <= 14
+                    || player.getX()/20 >= 20 && player.getY()/20 >= 13 && player.getX()/20 <= 23 & player.getY()/20 <= 14) {
+                this.setFightBackgroundImage("Forest");
+            } else if(player.getX()/20 >= 14 && player.getY()/20 >= 3 && player.getX()/20 <= 18 & player.getY()/20 <= 3
+                    || player.getX()/20 >= 11 && player.getY()/20 >= 4 && player.getX()/20 <= 18 & player.getY()/20 <= 5
+                    || player.getX()/20 >= 8 && player.getY()/20 >= 6 && player.getX()/20 <= 18 & player.getY()/20 <= 9) {
+                this.setFightBackgroundImage("Gras");
+            }
+
+            if (Restgegener <= 0) {
+                System.out.println("Naechte Welle");
+                spawnGegner = true;
+                L1.setGegnerLevel(L1.getGegnerLevel() + 10);
+                System.out.println("Level = " + L1.getGegnerLevel());
+                L1.setGegnerAnzahl(4);
+                Restgegener = L1.getGegnerAnzahl();
+                repaint();
+            }
+
+            if(player.getHp() <= 0) {
+                GameOver = true;
+                WindowStart[3] = true;
+                // TOT
+            }
+
+//		g.setColor(Color.RED);
+//		g.fillRect(0, 0, 11*20, 6*20);
+//		g.fillRect(0, 0, 14*20, 5*20);
+//		g.setColor(Color.BLUE);
+//		g.fillRect(14*20, 0, 10*20, 3*20);
+//		g.setColor(Color.CYAN);
+//		g.fillRect(19*20, 3*20, 5*20, 7*20);
+//		g.fillRect(20*20, 10*20, 4*20, 3*20);
+//		g.setColor(Color.ORANGE);
+//		g.fillRect(0*20, 6*20, 8*20, 9*20);
+//		g.setColor(Color.GREEN);
+//		g.fillRect(8*20, 10*20, 12*20, 10*20);
+//		g.fillRect(20*20, 13*20, 4*20, 2*20);
+//		g.setColor(Color.PINK);
+//		g.fillRect(14*20, 3*20, 5*20, 2*20);
+//		g.fillRect(11*20, 4*20, 8*20, 2*20);
+//		g.fillRect(8*20, 6*20, 11*20, 4*20);
+            g.drawImage(image1, 0, 0, BreiteX, HoheY-200, null);
+
+            g.drawImage(image2, player.getX(), player.getY(), PlayerGrosse, PlayerGrosse, null);
+
+            for(int uuz = 0;uuz<L1.getGegnerAnzahl();uuz++) {
+//			g.drawImage(image3, gegnerPose[uuz] [0], gegnerPose[uuz] [1], PlayerGrosse, PlayerGrosse, null);
+                g.drawImage(image3, L1.getGegnerPose(uuz, 0), L1.getGegnerPose(uuz, 1), PlayerGrosse, PlayerGrosse, null);
+            }
+
+            g.setColor(Color.RED);
+            g.drawImage(image4, shop.getShopPose(0), shop.getShopPose(1), PlayerGrosse, PlayerGrosse, null);
+            if(player.getX()==shop.getShopPose(0) && player.getY()==shop.getShopPose(1)) {
+                imShop = true;
+                shop();
+            } else {
+                imShop = false;
+            }
+
+
+            if(imShop == true) {
+                g.drawImage(image8, 0, 0, BreiteX, HoheY-200, null);
+
+                int LOL1 = 100;
+
+                g.drawImage(image10, 100, 60, 50, 50, null);
+                g.drawImage(image11, 160, 60, 50, 50, null);
+                g.drawImage(image12, 220, 60, 50, 50, null);
+                g.drawImage(image13, 280, 60, 50, 50, null);
+                g.drawImage(image14, 340, 60, 50, 50, null);
+
+                // 7 = 1Zeile
+                int KeyForBuy = 1;
+                g.setColor(Color.WHITE);
+                g.setFont(new Font("Franklin Gothic Demi Italic", 4, 15));
+                g.drawString("Or Use Key", LOL1-90, 150);
+                if(5 <= 7) {
+                    for(int izz = 0; izz <5;izz++) {
+                        g.setColor(Color.BLACK);
+                        g.fillRect(LOL1, 120, 50, 20);
+                        g.setColor(Color.WHITE);
+                        g.fillRect(LOL1+2, 122, 46, 16);
+                        g.setFont(new Font("Franklin Gothic Demi Italic", 4, 15));
+                        g.setColor(Color.BLACK);
+                        g.drawString(shop.getPreise()+"$", LOL1+2, 135);
+                        g.setFont(new Font("Franklin Gothic Demi Italic", 4, 20));
+                        g.setColor(Color.WHITE);
+                        g.drawString(WaffenName[izz], LOL1+5, 40);
+                        g.setColor(Color.WHITE);
+                        g.setFont(new Font("Franklin Gothic Demi Italic", 4, 15));
+                        g.drawString("" + KeyForBuy, LOL1+2, 150);
+                        KeyForBuy = KeyForBuy + 1;
+                        LOL1 = LOL1 + 60;
+                    }
+                    g.drawImage(image9, 0, 155, BreiteX, 10, null);
+                }
+
+            }
+
+            for(int uuz = 0;uuz<L1.getGegnerAnzahl();uuz++) {
+                if(player.getX()==L1.getGegnerPose(uuz, 0) && player.getY()==L1.getGegnerPose(uuz, 1)) {
+                    imKampf[uuz] = true;
+                    kampf();
+//				System.out.println("Im Kampf mit " + uuz + ". Gegner");
+                    Kampfgegen = uuz;
+                } else {
+                    imKampf[uuz] = false;
+                }
+            }
+
+
+            // image2_2
+            for(int ooi = 0; ooi<4;ooi++) {
+                if(imKampf[ooi] == true) {
+                    Spieler_vs_Ki = true;
+                    //Karte - Spieler - Gegner
+                    g.drawImage(image7, 0, 0, BreiteX, HoheY-200, null);
+                    g.drawImage(image2_2, 10, 100, 200, 200, null);
+                    g.drawImage(image3_2, 280, 100, 200, 200, null);
+                    String[] gegnerwerteString = new String[anzahl_von_waffen];
+                    g.setFont(new Font("Franklin Gothic Demi Italic", 4, 20));
+                    g.setColor(Color.WHITE);
+
+                    for(int uztz = 0; uztz<gegnerwerteString.length;uztz++) {
+//					gegnerwerteString[uztz] = String.valueOf(gegnerWerte[Kampfgegen][uztz]);
+                        gegnerwerteString[uztz] = String.valueOf(L1.getgegnerWerte(Kampfgegen, uztz));
+                    }
+                    g.drawString("dmg: " + gegnerwerteString[0], 20, 30);
+                    g.drawString("def: " + gegnerwerteString[1], 110, 30);
+                    g.drawString("hp: " + gegnerwerteString[2], 200, 30);
+                    g.drawString("acc: " + gegnerwerteString[3], 290, 30);
+                    if(player.getAcc() > L1.getgegnerWerte(Kampfgegen,4)) {
+                        g.setColor(Color.BLUE);
+                    } else if(player.getAcc() < L1.getgegnerWerte(Kampfgegen,4)) {
+                        g.setColor(Color.RED);
+                    } else if(player.getAcc() == L1.getgegnerWerte(Kampfgegen,4)) {
+                        g.setColor(Color.YELLOW);
+                    }
+                    g.drawString("dge: " + gegnerwerteString[4], 380, 30);
+
+//				Schaden2
+
+                    g.setColor(Color.WHITE);
+                    g.setFont(new Font("Franklin Gothic Demi Italic", 4, 40));
+                    g.drawString("- " + Schaden1, 380, 70);
+                    g.drawString("- " + Schaden2, 30, 70);
+                }
+            }
+
+
+
+            // HotBar
+            g.drawImage(image15, 0, HoheY-200, BreiteX, 200, null);
+
+            // Pfeil Tasten
+            if(Spieler_vs_Ki == false) {
+
+                // Oben
+                g.drawImage(image16, 400, 330, 30, 30, null);
+
+                // Unten
+                g.drawImage(image17, 400, 390, 30, 30, null);
+
+                // LINKS
+                g.drawImage(image18, 370, 360, 30, 30, null);
+
+//			Rechts
+                g.drawImage(image19, 430, 360, 30, 30, null);
+            } else {
+                g.drawImage(image23, 340, 320, 120, 40, null);
+                g.drawImage(image24, 340, 380, 120, 40, null);
+                g.setFont(new Font("Franklin Gothic Demi Italic", 4, 20));
+                g.setColor(Color.BLACK);
+                g.drawString("Q", 375, 365);
+                g.drawString("E", 375, 425);
+
+            }
+
+
+            //Herzen
+            int NeueHerzenZeile = 15;
+            int groeseDerHerzen = 20;
+            g.setColor(Color.RED);
+            Herzen = player.getHp() / 10;
+//		System.out.println("Live = " + Herzen);
+
+            for(int zzzu = 0;zzzu<Herzen;zzzu++) {
+                g.drawImage(image5, NeueHerzenZeile, HoheY-180, groeseDerHerzen, groeseDerHerzen, null);
+                NeueHerzenZeile = NeueHerzenZeile + (groeseDerHerzen);
+            }
+            if (player.getHp() > 1 && player.getHp() < 10) {
+                g.drawImage(image26, NeueHerzenZeile, HoheY-180, groeseDerHerzen, groeseDerHerzen, null);
+            }
+
+            //Geld
+            g.setColor(Color.YELLOW);
+            GeldString = String.valueOf(player.getGeld());
+            g.setFont(new Font("Matura MT Script Capitals", 4, 40));
+            g.drawString(GeldString + "$", 20, 380);
+
+            //Name
+            g.setFont(new Font("Franklin Gothic Demi Italic", 4, 20));
+            g.setColor(Color.WHITE);
+            g.drawString(player.getName(), 20, 420);
+
+            //Waffe
+//		g.setColor(Color.BLACK);
+            int groese = 80;
+            if(waffe == 1) {
+                this.setWeaponImage(1);
+                g.drawImage(image6, 235, 325, groese, groese, null);
+            } else if(waffe == 2) {
+                this.setWeaponImage(2);
+                g.drawImage(image6, 235, 325, groese, groese, null);
+            } else if(waffe == 3) {
+                this.setWeaponImage(3);
+                g.drawImage(image6, 235, 325, groese, groese, null);
+            }
+            String[] waffenString = new String[5];
+            waffenString[0] = String.valueOf(player.getDmg());
+            waffenString[1] = String.valueOf(player.getDef());
+            waffenString[2] = String.valueOf(player.getHp());
+            waffenString[3] = String.valueOf(player.getAcc());
+            waffenString[4] = String.valueOf(player.getDge());
+            g.setFont(new Font("Franklin Gothic Demi Italic", 4, 20));
+            g.setColor(Color.WHITE);
+            g.drawString("dmg: " + waffenString[0], 20, 450);
+            g.drawString("def: " + waffenString[1], 110, 450);
+            g.drawString("hp: " + waffenString[2], 200, 450);
+            g.drawString("acc: " + waffenString[3], 290, 450);
+            g.drawString("dge: " + waffenString[4], 380, 450);
+            // Schaden = dmg
+            // verteidigung = def
+            // Leben = hp
+            // genauigkeit = acc
+            // ausweichen = eva dge
+
+            if(Spieler_vs_Ki == true) {
+
+            }
+        } else if(WindowStart[3] && GameOver) {
             g.drawImage(image25, 0, 0, BreiteX, HoheY, null);
         }
     }
 
-    public void TodSelectet () {
-        WindowStart[1] = false;
-        waffe = 1;
-        player.setSpieler(70,40,50,45,20);
-        System.out.println("Zauberer");
-    }
-
-    public void MagierSelectet () {
-        WindowStart[1] = false;
-        waffe = 2;
-        player.setSpieler(50,30,50,40,20);
-        System.out.println("Magier");
-    }
-
-    public void BogenSchuetzeSelectet () {
-        WindowStart[1] = false;
-        waffe = 3;
-        player.setSpieler(60,15,50,25,40);
-        System.out.println("BogenSchuetze");
-    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -827,13 +821,13 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
 
                 if(x > 155 && x < 350 && y > 420 && y < 460) {
                     if(SpielerIcon == 1) {
-                        TodSelectet();
+                        Charakter_Select(1);
                         repaint();
                     } else if(SpielerIcon == 3) {
-                        MagierSelectet();
+                        Charakter_Select(2);
                         repaint();
                     } else if(SpielerIcon == 2) {
-                        BogenSchuetzeSelectet();
+                        Charakter_Select(3);
                         repaint();
                     }
                 }
@@ -998,13 +992,13 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
             }
             if(key == KeyEvent.VK_ENTER || key == KeyEvent.VK_SPACE) {
                 if(SpielerIcon == 1) {
-                    TodSelectet();
+                    Charakter_Select(1);
 
                 } else if(SpielerIcon == 3) {
-                    MagierSelectet();
+                    Charakter_Select(2);
 
                 } else if(SpielerIcon == 2) {
-                    BogenSchuetzeSelectet();
+                    Charakter_Select(3);
 
                 }
             }
