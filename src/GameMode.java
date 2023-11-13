@@ -7,10 +7,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.ImageObserver;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -130,21 +130,19 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
     // genauigkeit = acc
     // ausweichen = eva dge
 
-    static JFrame jf;
+    public JFrame frame;
 
     public GameMode() {
 //		GameMode GM = new GameMode();
-        jf = new JFrame();
-
-        jf.setSize(Main.BreiteMain,Main.HoheMain);
-        jf.setVisible(true);
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jf.setTitle(Main.GameName);
-        jf.addMouseListener(this);
-        jf.addKeyListener(this);
-        jf.setResizable(false);
-        jf.setLocationRelativeTo(null);
-        jf.add(this);
+        frame = new JFrame("" + Main.GameName);
+        frame.add(this);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(Main.BreiteMain,Main.HoheMain);
+        frame.setVisible(true);
+        frame.addMouseListener(this);
+        frame.addKeyListener(this);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
 
         player.setX(20);
         player.setY(20);
@@ -163,15 +161,14 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
         WaffenName[2] = "hp";
         WaffenName[3] = "acc";
         WaffenName[4] = "dge";
-        System.out.println(player.getName().length());
         this.setImage();
         repaint();
 
     }
 
     public void neuStart () {
-        jf.setVisible(false);
-        jf.dispose();
+        frame.setVisible(false);
+        frame.dispose();
         player = new Spieler();
         L1 = new Level();
         shop = new Shop();
@@ -288,6 +285,16 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
     public void setImage() {
         System.out.println("Setting Images");
 
+        /*try {
+            image1 = ImageIO.read(new File("image/Karte.png"));
+            image3 = ImageIO.read(new File("image/Gegner.png"));
+            image5 = ImageIO.read(new File("image/hearts.png"));
+            image9 = ImageIO.read(new File("image/Shop2.png"));
+            image20 = ImageIO.read(new File("image/Hintergrund1.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
         imagePic1 = new ImageIcon("image/Karte.png");
         image1 = imagePic1.getImage();
 
@@ -350,6 +357,7 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
 
         imagePic26 = new ImageIcon("image/Half_hearts.png");
         image26 = imagePic26.getImage();
+
 
 
     }
