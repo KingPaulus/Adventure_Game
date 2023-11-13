@@ -1,8 +1,10 @@
 public class Level {
 
 
-    private int playerXpose = GameMode.player.getX();
-    private int playerYpose = GameMode.player.getY();
+    private int playerXpose = 0;
+    private int playerYpose = 0;
+
+    private int[] ShopCord = new int[2];
     private int anzahlVonGegner = 4;
     private int Levelgegner = 20;
     private int[] [] gegnerPose = new int[this.anzahlVonGegner] [2];
@@ -42,49 +44,62 @@ public class Level {
         if(rndm2 == 0) {
             rndm2 = 1;
         }
-//		System.out.println("spawngegner(" + rndm1 + ", " + rndm2 + ", " + gegnerNR + ");");
         spawngegner(rndm1, rndm2,gegnerNR);
     }
 
     public void spawngegner(int r1, int r2,int gegnerNR) {
-//		 Nicht im Spieler
-        System.out.println("Berechne gegner " + "( " + r1 + ", " + r2 + ", " + gegnerNR + " )");
+
+        System.out.println("Berechne gegner " + "( X-Cord: " + r1 + ", Y-Cord: " + r2 + ", Gegner Nr:" + gegnerNR + " )");
+        playerXpose = GameMode.player.getX();
+        playerYpose = GameMode.player.getY();
+        ShopCord[0] = GameMode.shop.getShopPose(0);
+        ShopCord[1] = GameMode.shop.getShopPose(1);
+
         if(r1 == playerXpose/20 && r2 == playerYpose/20) {
             System.out.println("Gegner im Spieler / Berechne Neu");
             genGegnerPose(r1,r2,gegnerNR);
+            return;
         }
-//		System.out.println("Nicht Im spieler " + gegnerNR);
-        //Nicht Im Shop
-        if(r1 == GameMode.shop.getShopPose(0)/20 && r2 == GameMode.shop.getShopPose(1)/20) {
-            System.out.println("Gegner im Shop / Berechne Neu");
-            genGegnerPose(r1,r2,gegnerNR);
-        }
-//		System.out.println("Nicht Im shop " + gegnerNR);
-        // Y+1										// X +1											// Y - 1										// X - 1
+									// X +1											// Y - 1										// X - 1
         if(r1 == playerXpose/20 && r2 == (playerYpose/20+1) || r1 == (playerXpose/20+1) && r2 == playerYpose/20 || r1 == playerXpose/20 && r2 == (playerYpose/20-1) || r1 == (playerXpose/20-1) && r2 == playerYpose/20) {
             System.out.println("Gegner Neben Spieler / Berechne Neu");
             genGegnerPose(r1,r2,gegnerNR);
+            return;
         }
-//		System.out.println("Nicht NebenSpieler " + gegnerNR);
 
-        for(int zzu = 1;zzu<gegnerPose.length;zzu++) {
-            if(r1 == gegnerPose[zzu-1][0] && r2 == gegnerPose[zzu-1][1]) {
+        if(r1 == ShopCord[0]/20 && r2 == ShopCord[0]/20) {
+            System.out.println("Gegner im Shop / Berechne Neu");
+            genGegnerPose(r1,r2,gegnerNR);
+            return;
+        }
+
+        if(r1 == ShopCord[0]/20 && r2 == (ShopCord[1]/20+1) || r1 == (ShopCord[0]/20+1) && r2 == ShopCord[1]/20 || r1 == ShopCord[0]/20 && r2 == (ShopCord[1]/20-1) || r1 == (ShopCord[0]/20-1) && r2 == ShopCord[1]/20) {
+            System.out.println("Gegner Neben Spieler / Berechne Neu");
+            genGegnerPose(r1,r2,gegnerNR);
+            return;
+        }
+
+        for(int indexGegner = 1; indexGegner<gegnerPose.length; indexGegner++) {
+            if(r1 == gegnerPose[indexGegner-1][0] && r2 == gegnerPose[indexGegner-1][1]) {
+                System.out.println("Gegner in Gegner / Berechne Neu");
                 genGegnerPose(r1,r2,gegnerNR);
+                return;
             }
-            if(r1 == (gegnerPose[zzu-1][0]/20)+1 && r2 == (gegnerPose[zzu-1][1]/20) || r1 == (gegnerPose[zzu-1][0]/GameMode.PlayerGrosse) && r2 == (gegnerPose[zzu-1][1]/GameMode.PlayerGrosse)+1 || r1 == (gegnerPose[zzu-1][0]/GameMode.PlayerGrosse)-1 && r2 == (gegnerPose[zzu-1][1]/GameMode.PlayerGrosse) || r1 == (gegnerPose[zzu-1][0]/GameMode.PlayerGrosse) && r2 == (gegnerPose[zzu-1][1]/GameMode.PlayerGrosse)-1) {
+            if(r1 == (gegnerPose[indexGegner-1][0]/20)+1 && r2 == (gegnerPose[indexGegner-1][1]/20) || r1 == (gegnerPose[indexGegner-1][0]/GameMode.PlayerGrosse) && r2 == (gegnerPose[indexGegner-1][1]/GameMode.PlayerGrosse)+1 || r1 == (gegnerPose[indexGegner-1][0]/GameMode.PlayerGrosse)-1 && r2 == (gegnerPose[indexGegner-1][1]/GameMode.PlayerGrosse) || r1 == (gegnerPose[indexGegner-1][0]/GameMode.PlayerGrosse) && r2 == (gegnerPose[indexGegner-1][1]/GameMode.PlayerGrosse)-1) {
                 System.out.println("Gegner neben Gegner / Berechne Neu");
                 genGegnerPose(r1,r2,gegnerNR);
+                return;
             }
         }
-//		System.out.println("r1 = " + r1 + " r2 = " + r2);
+
+        // Gegner Kordinaten Setzten
         gegnerPose[gegnerNR] [0] = r1*20;
         gegnerPose[gegnerNR] [1] = r2*20;
-//		gegnerWerte[] []
-//		for(int ztz = 0;ztz<gegnerWerte[gegnerNR].length;ztz++) {
-//		for(int ztz = 0;ztz<GameMode.L1.getGegnerLevel().lenght;ztz++) {
-        for(int ztz = 0;ztz<5;ztz++) {
-//			MaximumWeaponLevel
-            int iiio = (int)(Math.random()*20+Levelgegner);
+
+        // Gegner Werte Zuweisen
+        for(int index = 0; index<5; index++) {
+
+            int randomWert = (int)(Math.random()*20+Levelgegner);
             // TODO
             if(Levelgegner >= 100-20) {
                 GameMode.shop.setMaximumWeaponLevel(200);
@@ -98,7 +113,7 @@ public class Level {
                 GameMode.shop.setMaximumWeaponLevel(400);
                 GameMode.shop.setShopLevel(4);
             }
-            gegnerWerte[gegnerNR] [ztz] = iiio;
+            gegnerWerte[gegnerNR][index] = randomWert;
         }
         gegnerWerte[gegnerNR] [3] = (int)(Math.random()*20+Levelgegner);
     }

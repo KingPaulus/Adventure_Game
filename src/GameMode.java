@@ -35,6 +35,12 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
     int SpielerIcon = 1;
     // 1Tod		2BogenSchuetze		3Zauberer
     String [] characterNames = new String[3];
+    int[][] CharacterStates = new int[3][5];
+    // Schaden = dmg
+    // verteidigung = def
+    // Leben = hp
+    // genauigkeit = acc
+    // ausweichen = eva dge
 
     String GameNameNormal = Main.GameName;
     boolean[] WindowStart = new boolean[4];
@@ -48,11 +54,6 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
     boolean Spieler_vs_Ki = false;
     int Restgegener = L1.getGegnerAnzahl();
     boolean GegnerZug = false;
-    // Schaden = dmg
-    // verteidigung = def
-    // Leben = hp
-    // genauigkeit = acc
-    // ausweichen = eva dge
     int waffe;
     //Waffe 	1Schwert		2Axt		3Dreizack
     String[] WaffenName = new String[anzahl_von_waffen];
@@ -136,6 +137,9 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
         WaffenName[2] = "hp";
         WaffenName[3] = "acc";
         WaffenName[4] = "dge";
+        CharacterStates[0] = new int[]{70, 40, 60,45, 20};
+        CharacterStates[1] = new int[]{50, 30, 20, 40, 20};
+        CharacterStates[2] = new int[]{50, 30, 50, 40, 20};
         characterNames[0] = "Schwarzer Magier";
         characterNames[1] = "Bogen Schuetze";
         characterNames[2] = "Magier";
@@ -154,11 +158,6 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
 
     }
 
-
-    public void shop() {
-        repaint();
-    }
-
     public void waffenUpdate (int waffenSlot ,int UpdateUm) {
         if(waffenSlot == 0) {
             player.setDmg(player.getDmg()+UpdateUm);
@@ -172,10 +171,6 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
             player.setDge(player.getDge()+UpdateUm);
         }
 //		Player[waffenSlot] = Player[waffenSlot] + UpdateUm;
-    }
-
-    public void kampf() {
-        repaint();
     }
 
     public void angriff() {
@@ -308,7 +303,6 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
     }
 
     public void setShopImage() {
-        System.out.println("Shop Level: " + shop.getShopLevel());
         try {
             if(shop.getShopLevel() == 1) {
                 image3_2 = ImageIO.read(new File("image/Gegner1_1.png"));
@@ -330,7 +324,6 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
     }
 
     public void setFightBackgroundImage(String background) {
-        System.out.println("Fight in: " + background);
         try {
             if (background == "Desert") {
                 image7 = ImageIO.read(new File("image/Kampf_Hintergrund_"+ background +".png"));
@@ -351,7 +344,6 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
     }
 
     public void setWeaponImage(int weapon) {
-        System.out.println("Choosen Weapon: " + weapon);
         try {
             if (weapon == 1) {
                 image6 = ImageIO.read(new File("image/TotenStab.png"));
@@ -368,13 +360,13 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
     public void Charakter_Select(int Charakter) {
         if(Charakter == 1) {
             waffe = 1;
-            player.setSpieler(70,40,50,45,20);
+            player.setSpieler(CharacterStates[0][0],CharacterStates[0][1],CharacterStates[0][2],CharacterStates[0][3],CharacterStates[0][4]);
         } else if(Charakter == 2) {
             waffe = 2;
-            player.setSpieler(50,30,50,40,20);
+            player.setSpieler(CharacterStates[1][0],CharacterStates[1][1],CharacterStates[1][2],CharacterStates[1][3],CharacterStates[1][4]);
         } else if(Charakter == 3) {
             waffe = 2;
-            player.setSpieler(50,30,50,40,20);
+            player.setSpieler(CharacterStates[2][0],CharacterStates[2][1],CharacterStates[2][2],CharacterStates[2][3],CharacterStates[2][4]);
         }
         WindowStart[1] = false;
         WindowStart[2] = true;
@@ -432,17 +424,14 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
 
     public void paint(Graphics g) {
         super.paint(g);
-        System.out.println("Painting Game");
 
         if(WindowStart[0]) {
-            System.out.println("Name Enter");
             g.drawImage(image20, 0, 0, BreiteX, HoheY-40, null);
             g.setColor(Color.WHITE);
 //			g.fillRect(40, 80, 400, 50);
             g.drawImage(image21, 40, 80, 400, 100, null);
             g.setColor(Color.BLACK);
             g.setFont(new Font("Franklin Gothic Demi Italic", 4, 50));
-            // TODO
             g.drawString(GameNameNormal, 50, 60);
             g.setFont(new Font("Franklin Gothic Demi Italic", 4, 20));
             g.drawString("Name:", 210, 90);
@@ -484,7 +473,7 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
             g.setColor(Color.WHITE);
             //14 Maximum
 
-            if( player.getName().length() == 14) {
+            if(player.getName().length() == 14) {
                 System.out.println("Name Entspricht 14 Zeichen");
                 WindowStart[1] = true;
                 WindowStart[0] = false;
@@ -492,7 +481,6 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
             }
 
         } else if(WindowStart[1]) {
-            System.out.println("Weapon Enter");
             this.setPlayerImage(SpielerIcon);
 
             g.drawImage(image22, 0, 0, BreiteX, HoheY, null);
@@ -512,6 +500,13 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
                 }
                 g.setColor(Color.WHITE);
                 g.drawString(characterNames[0], 110, 60);
+
+                g.setFont(new Font("Franklin Gothic Demi Italic", 4, 15));
+                g.drawString("Schaden: " + CharacterStates[0][0], 10, 110);
+                g.drawString("Verteidigung: " + CharacterStates[0][1], 10, 130);
+                g.drawString("Herzen: " + CharacterStates[0][2], 10, 150);
+                g.drawString("Genauigkeit: " + CharacterStates[0][3], 10, 170);
+                g.drawString("Ausweichen: " + CharacterStates[0][4], 10, 190);
             } else if(SpielerIcon == 2) {
                 g.setColor(Color.BLACK);
                 for (int xOffset = -outlineSize; xOffset <= outlineSize; xOffset++) {
@@ -523,6 +518,13 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
                 }
                 g.setColor(Color.WHITE);
                 g.drawString(characterNames[1], 140, 60);
+
+                g.setFont(new Font("Franklin Gothic Demi Italic", 4, 15));
+                g.drawString("Schaden: " + CharacterStates[1][0], 10, 110);
+                g.drawString("Verteidigung: " + CharacterStates[1][1], 10, 130);
+                g.drawString("Herzen: " + CharacterStates[1][2], 10, 150);
+                g.drawString("Genauigkeit: " + CharacterStates[1][3], 10, 170);
+                g.drawString("Ausweichen: " + CharacterStates[1][4], 10, 190);
             } else if(SpielerIcon == 3) {
                 g.setColor(Color.BLACK);
                 for (int xOffset = -outlineSize; xOffset <= outlineSize; xOffset++) {
@@ -534,6 +536,13 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
                 }
                 g.setColor(Color.WHITE);
                 g.drawString(characterNames[2], 170, 60);
+
+                g.setFont(new Font("Franklin Gothic Demi Italic", 4, 15));
+                g.drawString("Schaden: " + CharacterStates[2][0], 10, 110);
+                g.drawString("Verteidigung: " + CharacterStates[2][1], 10, 130);
+                g.drawString("Herzen: " + CharacterStates[2][2], 10, 150);
+                g.drawString("Genauigkeit: " + CharacterStates[2][3], 10, 170);
+                g.drawString("Ausweichen: " + CharacterStates[2][4], 10, 190);
             }
 
             g.drawImage(image2_2, 80, 80, 300, 300, null);
@@ -553,7 +562,7 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
             this.setShopImage();
 
             if(spawnGegner) {
-                for(int iiiu = 0; iiiu<L1.getGegnerAnzahl();iiiu++) {
+                for(int index = 0; index<L1.getGegnerAnzahl();index++) {
                     //x460(23) y280(14)
                     int rndm1 = (int)(Math.random()*23);
                     if(rndm1 == 0) {
@@ -564,10 +573,9 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
                     if(rndm2 == 0) {
                         rndm2 = 1;
                     }
-                    L1.spawngegner(rndm1, rndm2,iiiu);
+                    L1.spawngegner(rndm1, rndm2,index);
                 }
                 spawnGegner = false;
-
             }
 
             if(	player.getX()/20 >= 0 && player.getY()/20 >= 0 && player.getX()/20 <= 10 & player.getY()/20 <= 5
@@ -625,7 +633,6 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
             g.drawImage(image4, shop.getShopPose(0), shop.getShopPose(1), PlayerGrosse, PlayerGrosse, null);
             if(player.getX()==shop.getShopPose(0) && player.getY()==shop.getShopPose(1)) {
                 imShop = true;
-                shop();
             } else {
                 imShop = false;
             }
@@ -670,14 +677,12 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
 
             }
 
-            for(int uuz = 0;uuz<L1.getGegnerAnzahl();uuz++) {
-                if(player.getX()==L1.getGegnerPose(uuz, 0) && player.getY()==L1.getGegnerPose(uuz, 1)) {
-                    imKampf[uuz] = true;
-                    kampf();
-//				System.out.println("Im Kampf mit " + uuz + ". Gegner");
-                    Kampfgegen = uuz;
+            for(int index = 0;index<L1.getGegnerAnzahl();index++) {
+                if(player.getX()==L1.getGegnerPose(index, 0) && player.getY()==L1.getGegnerPose(index, 1)) {
+                    imKampf[index] = true;
+                    Kampfgegen = index;
                 } else {
-                    imKampf[uuz] = false;
+                    imKampf[index] = false;
                 }
             }
 
@@ -870,7 +875,7 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
 					this.swapCharakter("left");
                 }
                 if(x > 385 && x < 455 && y > 225 && y < 275) {
-                    this.swapCharakter("Right");
+                    this.swapCharakter("right");
                 }
 
                 if(x > 155 && x < 350 && y > 420 && y < 460) {
@@ -1200,6 +1205,12 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
             if(key == KeyEvent.VK_MINUS) {
                 GameMode.player.setName(GameMode.player.getName() + "-");
 
+            }
+            if (key == KeyEvent.VK_DELETE) {
+                String name = GameMode.player.getName();
+                name = name.substring(0, name.length() - 1);
+                System.out.println("Lösch" + name);
+                GameMode.player.setName(name);
             }
         }
 
