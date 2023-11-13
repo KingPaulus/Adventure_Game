@@ -62,62 +62,39 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
     String GeldString = String.valueOf(player.getGeld());
     boolean GameOver = false;
     int Kampfgegen;
-
-    ImageIcon imagePic1;
+    
     Image image1 = null;
-    ImageIcon imagePic2;
     Image image2 = null;
-    ImageIcon imagePic2_2;
     Image image2_2 = null;
-    ImageIcon imagePic3;
     Image image3 = null;
     ImageIcon imagePic3_2;
     Image image3_2 = null;
     ImageIcon imagePic4;
     Image image4 = null;
-    ImageIcon imagePic5;
     Image image5 = null;
     ImageIcon imagePic6;
     Image image6 = null;
     ImageIcon imagePic7;
     Image image7 = null;
-    ImageIcon imagePic8;
     Image image8 = null;
-    ImageIcon imagePic9;
     Image image9 = null;
-    ImageIcon imagePic10;
     Image image10 = null;
-    ImageIcon imagePic11;
     Image image11 = null;
-    ImageIcon imagePic12;
     Image image12 = null;
-    ImageIcon imagePic13;
     Image image13 = null;
-    ImageIcon imagePic14;
     Image image14 = null;
-    ImageIcon imagePic15;
     Image image15 = null;
-    ImageIcon imagePic16;
     Image image16 = null;
-    ImageIcon imagePic17;
     Image image17 = null;
-    ImageIcon imagePic18;
     Image image18 = null;
-    ImageIcon imagePic19;
     Image image19 = null;
-    ImageIcon imagePic20;
     Image image20 = null;
-    ImageIcon imagePic21;
     Image image21 = null;
     ImageIcon imagePic22;
     Image image22 = null;
-    ImageIcon imagePic23;
     Image image23 = null;
-    ImageIcon imagePic24;
     Image image24 = null;
-    ImageIcon imagePic25;
     Image image25 = null;
-    ImageIcon imagePic26;
     Image image26 = null;
     ImageIcon imagePic27;
     Image image27 = null;
@@ -284,83 +261,115 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
 
     public void setImage() {
         System.out.println("Setting Images");
-
-        /*try {
+        try {
             image1 = ImageIO.read(new File("image/Karte.png"));
             image3 = ImageIO.read(new File("image/Gegner.png"));
             image5 = ImageIO.read(new File("image/hearts.png"));
-            image9 = ImageIO.read(new File("image/Shop2.png"));
+            image8 = ImageIO.read(new File("image/Shop2.png"));
+            image9 = ImageIO.read(new File("image/Shop3.png"));
+            image10 = ImageIO.read(new File("image/ShopItem1.png"));
+            image11 = ImageIO.read(new File("image/ShopItem2.png"));
+            image12 = ImageIO.read(new File("image/ShopItem3.png"));
+            image13 = ImageIO.read(new File("image/ShopItem4.png"));
+            image14 = ImageIO.read(new File("image/ShopItem5.png"));
+            image15 = ImageIO.read(new File("image/Karte2.png"));
+            image16 = ImageIO.read(new File("image/Pfeil3.png"));
+            image17 = ImageIO.read(new File("image/Pfeil4.png"));
+            image18 = ImageIO.read(new File("image/Pfeil2.png"));
+            image19 = ImageIO.read(new File("image/Pfeil1.png"));
             image20 = ImageIO.read(new File("image/Hintergrund1.png"));
+            image21 = ImageIO.read(new File("image/SchriftRolle.png"));
+            image23 = ImageIO.read(new File("image/KampfButton1.png"));
+            image24 = ImageIO.read(new File("image/KampfButton2.png"));
+            image25 = ImageIO.read(new File("image/Hintergrund3.png"));
+            image26 = ImageIO.read(new File("image/half_hearts.png"));
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
-
-        imagePic1 = new ImageIcon("image/Karte.png");
-        image1 = imagePic1.getImage();
-
-        imagePic3 = new ImageIcon("image/Gegner.png");
-        image3 = imagePic3.getImage();
-
-        imagePic5 = new ImageIcon("image/hearts.png");
-        image5 = imagePic5.getImage();
-
-        imagePic8 = new ImageIcon("image/Shop2.png");
-        image8 = imagePic8.getImage();
-
-        imagePic9 = new ImageIcon("image/Shop3.png");
-        image9 = imagePic9.getImage();
-
-        imagePic10 = new ImageIcon("image/ShopItem1.png");
-        image10 = imagePic10.getImage();
-
-        imagePic11 = new ImageIcon("image/ShopItem2.png");
-        image11 = imagePic11.getImage();
-
-        imagePic12 = new ImageIcon("image/ShopItem3.png");
-        image12 = imagePic12.getImage();
-
-        imagePic13 = new ImageIcon("image/ShopItem4.png");
-        image13 = imagePic13.getImage();
-
-        imagePic14 = new ImageIcon("image/ShopItem5.png");
-        image14 = imagePic14.getImage();
-
-        imagePic15 = new ImageIcon("image/Karte2.png");
-        image15 = imagePic15.getImage();
-
-        imagePic16 = new ImageIcon("image/Pfeil3.png");
-        image16 = imagePic16.getImage();
-
-        imagePic17 = new ImageIcon("image/Pfeil4.png");
-        image17 = imagePic17.getImage();
-
-        imagePic18 = new ImageIcon("image/Pfeil2.png");
-        image18 = imagePic18.getImage();
-
-        imagePic19 = new ImageIcon("image/Pfeil1.png");
-        image19 = imagePic19.getImage();
-
-        imagePic20 = new ImageIcon("image/Hintergrund1.png");
-        image20 = imagePic20.getImage();
-
-        imagePic21 = new ImageIcon("image/SchriftRolle.png");
-        image21 = imagePic21.getImage();
-
-        imagePic23 = new ImageIcon("image/KampfButton1.png");
-        image23 = imagePic23.getImage();
-
-        imagePic24 = new ImageIcon("image/KampfButton2.png");
-        image24 = imagePic24.getImage();
-
-        imagePic25 = new ImageIcon("image/Hintergrund3.png");
-        image25 = imagePic25.getImage();
-
-        imagePic26 = new ImageIcon("image/Half_hearts.png");
-        image26 = imagePic26.getImage();
-
-
-
+        }
     }
+
+    public void setPlayerImage(int player) {
+        System.out.println("Setting Player Image: " + player);
+        try {
+            if(player == 1) {
+                image2 = ImageIO.read(new File("image/Spieler1.png"));
+                image2_2 = ImageIO.read(new File("image/Spieler1_2.png"));
+                image22 = ImageIO.read(new File("image/Hintergrund2_1.png"));
+            } else if(player == 2) {
+                image2 = ImageIO.read(new File("image/Spieler2.png"));
+                image2_2 = ImageIO.read(new File("image/Spieler2_2.png"));
+                image22 = ImageIO.read(new File("image/Hintergrund2_2.png"));
+            } else if(player == 3) {
+                image2 = ImageIO.read(new File("image/Spieler3.png"));
+                image2_2 = ImageIO.read(new File("image/Spieler3_2.png"));
+                image22 = ImageIO.read(new File("image/Hintergrund2_3.png"));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setShopImage() {
+        System.out.println("Shop Level: " + shop.getShopLevel());
+        try {
+            if(shop.getShopLevel() == 1) {
+                image3_2 = ImageIO.read(new File("image/Gegner1_1.png"));
+                image4 = ImageIO.read(new File("image/ShopLevel1.png"));
+            } else if(shop.getShopLevel() == 2) {
+                image3_2 = ImageIO.read(new File("image/Gegner1_2.png"));
+                image4 = ImageIO.read(new File("image/ShopLevel2.png"));
+            } else if(shop.getShopLevel() == 3) {
+                image3_2 = ImageIO.read(new File("image/Gegner1_3.png"));
+                image4 = ImageIO.read(new File("image/ShopLevel3.png"));
+            } else if(shop.getShopLevel() == 4) {
+                image3_2 = ImageIO.read(new File("image/Gegner1_4.png"));
+                image4 = ImageIO.read(new File("image/ShopLevel4.png"));
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setFightBackgroundImage(String background) {
+        System.out.println("Fight in: " + background);
+        try {
+            if (background == "Desert") {
+                image7 = ImageIO.read(new File("image/Kampf_Hintergrund_"+ background +".png"));
+            } else if (background == "Ice") {
+                image7 = ImageIO.read(new File("image/Kampf_Hintergrund_"+ background +".png"));
+            } else if (background == "Lake") {
+                image7 = ImageIO.read(new File("image/Kampf_Hintergrund_"+ background +".png"));
+            } else if (background == "Rock") {
+                image7 = ImageIO.read(new File("image/Kampf_Hintergrund_"+ background +".png"));
+            } else if (background == "Forest") {
+                image7 = ImageIO.read(new File("image/Kampf_Hintergrund_"+ background +".png"));
+            } else if (background == "Gras") {
+                image7 = ImageIO.read(new File("image/Kampf_Hintergrund_"+ background +".png"));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setWeaponImage(int weapon) {
+        System.out.println("Choosen Weapon: " + weapon);
+        try {
+            if (weapon == 1) {
+                image6 = ImageIO.read(new File("image/TotenStab.png"));
+            } else if (weapon == 2) {
+                image6 = ImageIO.read(new File("image/Zauberstab.png"));
+            } else if (weapon == 3) {
+                image6 = ImageIO.read(new File("image/Bogen.png"));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 
     public void paint(Graphics g) {
         super.paint(g);
@@ -384,103 +393,30 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
 
         }
 
-        super.paintComponent(g);
-
-        if(SpielerIcon == 1) {
-            imagePic2 = new ImageIcon("image/Spieler1.png");
-            image2 = imagePic2.getImage();
-        } else if(SpielerIcon == 2) {
-            imagePic2 = new ImageIcon("image/Spieler2.png");
-            image2 = imagePic2.getImage();
-        } else if(SpielerIcon == 3) {
-            imagePic2 = new ImageIcon("image/Spieler3.png");
-            image2 = imagePic2.getImage();
-        }
-
-        if(SpielerIcon == 1) {
-            imagePic2_2 = new ImageIcon("image/Spieler1_2.png");
-            image2_2 = imagePic2_2.getImage();
-        } else if(SpielerIcon == 2) {
-            imagePic2_2 = new ImageIcon("image/Spieler2_2.png");
-            image2_2 = imagePic2_2.getImage();
-        } else if(SpielerIcon == 3) {
-            imagePic2_2 = new ImageIcon("image/Spieler3_2.png");
-            image2_2 = imagePic2_2.getImage();
-        }
-
-        if(shop.getShopLevel() == 1) {
-            imagePic3_2 = new ImageIcon("image/Gegner1_1.png");
-            image3_2 = imagePic3_2.getImage();
-        } else if(shop.getShopLevel() == 2) {
-            imagePic3_2 = new ImageIcon("image/Gegner1_2.png");
-            image3_2 = imagePic3_2.getImage();
-        } else if(shop.getShopLevel() == 3) {
-            imagePic3_2 = new ImageIcon("image/Gegner1_3.png");
-            image3_2 = imagePic3_2.getImage();
-        } else if(shop.getShopLevel() == 4) {
-            imagePic3_2 = new ImageIcon("image/Gegner1_4.png");
-            image3_2 = imagePic3_2.getImage();
-        }
-
-        if(shop.getShopLevel() == 1) {
-            imagePic4 = new ImageIcon("image/ShopLevel1.png");
-            image4 = imagePic4.getImage();
-        } else if(shop.getShopLevel() == 2) {
-            imagePic4 = new ImageIcon("image/ShopLevel2.png");
-            image4 = imagePic4.getImage();
-        } else if(shop.getShopLevel() == 3) {
-            imagePic4 = new ImageIcon("image/ShopLevel3.png");
-            image4 = imagePic4.getImage();
-        } else if(shop.getShopLevel() == 4) {
-            imagePic4 = new ImageIcon("image/ShopLevel4.png");
-            image4 = imagePic4.getImage();
-        }
-
-        if(SpielerIcon == 1) {
-            imagePic22 = new ImageIcon("image/Hintergrund2_1.png");
-            image22 = imagePic22.getImage();
-        } else if(SpielerIcon == 2) {
-            imagePic22 = new ImageIcon("image/Hintergrund2_2.png");
-            image22 = imagePic22.getImage();
-        } else if(SpielerIcon == 3) {
-            imagePic22 = new ImageIcon("image/Hintergrund2_3.png");
-            image22 = imagePic22.getImage();
-        }
-
+        this.setPlayerImage(SpielerIcon);
+        this.setShopImage();
 
         if(	player.getX()/20 >= 0 && player.getY()/20 >= 0 && player.getX()/20 <= 10 & player.getY()/20 <= 5
                 || player.getX()/20 >= 11 && player.getY()/20 >= 0 && player.getX()/20 <= 13 && player.getY()/20 <= 3) {
-            // Desert
-            imagePic7 = new ImageIcon("image/Kampf_Hintergrund_Desert.png");
-            image7 = imagePic7.getImage();
+            this.setFightBackgroundImage("Desert");
         } else if(player.getX()/20 >= 14 && player.getY()/20 >= 0 && player.getX()/20 <= 23 & player.getY()/20 <= 2) {
-            // Ice
-            imagePic7 = new ImageIcon("image/Kampf_Hintergrund_Ice.png");
-            image7 = imagePic7.getImage();
+            this.setFightBackgroundImage("Ice");
         } else if(player.getX()/20 >= 19 && player.getY()/20 >= 3 && player.getX()/20 <= 23 & player.getY()/20 <= 9
                 || player.getX()/20 >= 20 && player.getY()/20 >= 10 && player.getX()/20 <= 23 & player.getY()/20 <= 12) {
-            // Lake
-            imagePic7 = new ImageIcon("image/Kampf_Hintergrund_Lake.png");
-            image7 = imagePic7.getImage();
+            this.setFightBackgroundImage("Lake");
         } else if(player.getX()/20 >= 0 && player.getY()/20 >= 6 && player.getX()/20 <= 7 & player.getY()/20 <= 14) {
-            // Rock
-            imagePic7 = new ImageIcon("image/Kampf_Hintergrund_Rock.png");
-            image7 = imagePic7.getImage();
+            this.setFightBackgroundImage("Rock");
         } else if(player.getX()/20 >= 8 && player.getY()/20 >= 10 && player.getX()/20 <= 19 & player.getY()/20 <= 14
                 || player.getX()/20 >= 20 && player.getY()/20 >= 13 && player.getX()/20 <= 23 & player.getY()/20 <= 14) {
-            // Forest
-            imagePic7 = new ImageIcon("image/Kampf_Hintergrund_Forest.png");
-            image7 = imagePic7.getImage();
+            this.setFightBackgroundImage("Forest");
         } else if(player.getX()/20 >= 14 && player.getY()/20 >= 3 && player.getX()/20 <= 18 & player.getY()/20 <= 3
                 || player.getX()/20 >= 11 && player.getY()/20 >= 4 && player.getX()/20 <= 18 & player.getY()/20 <= 5
                 || player.getX()/20 >= 8 && player.getY()/20 >= 6 && player.getX()/20 <= 18 & player.getY()/20 <= 9) {
-            // Gras
-            imagePic7 = new ImageIcon("image/Kampf_Hintergrund_Gras.png");
-            image7 = imagePic7.getImage();
+            this.setFightBackgroundImage("Gras");
         }
 
         if (Restgegener <= 0) {
-            System.out.println("N�chte Welle");
+            System.out.println("Naechte Welle");
             spawnGegner = true;
             L1.setGegnerLevel(L1.getGegnerLevel() + 10);
             System.out.println("Level = " + L1.getGegnerLevel());
@@ -679,16 +615,13 @@ public class GameMode extends JPanel implements MouseListener, KeyListener {
 //		g.setColor(Color.BLACK);
         int groese = 80;
         if(waffe == 1) {
-            imagePic6 = new ImageIcon("image/TotenStab.png");
-            image6 = imagePic6.getImage();
+            this.setWeaponImage(1);
             g.drawImage(image6, 235, 325, groese, groese, null);
         } else if(waffe == 2) {
-            imagePic6 = new ImageIcon("image/Zauberstab.png");
-            image6 = imagePic6.getImage();
+            this.setWeaponImage(2);
             g.drawImage(image6, 235, 325, groese, groese, null);
         } else if(waffe == 3) {
-            imagePic6 = new ImageIcon("image/Bogen.png");
-            image6 = imagePic6.getImage();
+            this.setWeaponImage(3);
             g.drawImage(image6, 235, 325, groese, groese, null);
         }
         String[] waffenString = new String[5];
